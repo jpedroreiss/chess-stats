@@ -61,7 +61,7 @@ const Footer = ({}: FooterProps) => {
             </ul>
           </div>
 
-          {/* API e Desenvolvedores */}
+          {/* API | Desenvolvedores */}
           <div>
             <h3 className="font-bold mb-3 text-gray-300 text-sm flex items-center gap-2">
               <span className="text-gray-400">⚙</span>
