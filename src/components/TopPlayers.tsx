@@ -97,7 +97,7 @@ const TopPlayers: React.FC = () => {
     );
   }
 
-  // Funções para pegar a bandeira e o nome do pais
+  // Funções para pegar a bandeira e o nome do pais.
 
   function getFlagUrl(countryUrl: string): string {
     if (!countryUrl) return '';
