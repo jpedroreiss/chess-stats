@@ -1,54 +1,65 @@
-# React + TypeScript + Vite
+# ♟️ Chess Stats
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Chess Stats** é uma aplicação web desenvolvida com **React + TypeScript** que consome a API pública do [Chess.com](https://www.chess.com/) para exibir dados em tempo real do mundo do xadrez.
 
-Currently, two official plugins are available:
+![1](https://github.com/user-attachments/assets/b8de16df-9af0-4f54-9e90-6acbbbf2630b)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![2](https://github.com/user-attachments/assets/da997c99-38cd-4327-a621-e23b2771668b)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📌 Funcionalidades
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- 📰 **Últimas notícias** sobre o universo do xadrez.
+- 📺 **Streamers afiliados do Chess.com** que estão ao vivo.
+- 🔍 **Ferramenta de busca** de jogadores por nome de usuário:
+  - Foto de perfil e nome
+  - Ratings (Blitz, Bullet, Rápidas)
+  - Estatísticas gerais
+  - Últimas **5 partidas jogadas** com detalhes.
+- 🏆 **Leaderboard** com os **3 melhores jogadores** de cada modalidade:
+  - Blitz
+  - Bullet
+  - Rápidas
+- 📱 **Interface responsiva**, com menu de navegação e rodapé informativo.
+
+
+## 🚀 Tecnologias utilizadas
+
+- [React](https://reactjs.org/) + [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Axios](https://axios-http.com/)
+- [Chess.com Public API](https://www.chess.com/news/view/published-data-api)
+
+
+
+## 🎨 Justificativa para o uso do Tailwind CSS
+
+A escolha pelo Tailwind CSS se deu principalmente pela sua proposta de produtividade e agilidade no desenvolvimento de interfaces modernas e responsivas. Apesar de outras opções como Sass serem populares, o Tailwind oferece vantagens que se alinham bem ao contexto e aos objetivos do projeto.
+
+
+## 💡 Como rodar o projeto localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/chess-stats.git
+
+# Acesse a pasta
+cd chess-stats
+
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run dev
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## O projeto foi desenvolvido como parte do programa **Zetta Lab**.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+![zetta](https://github.com/user-attachments/assets/41535cae-a33c-4c8e-938d-bb38bd4044d6)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+
+
+
+
