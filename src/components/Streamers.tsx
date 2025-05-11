@@ -19,10 +19,7 @@ const LiveStreamers: React.FC = () => {
   useEffect(() => {
     const fetchLiveStreamers = async () => {
       try {
-        // Faz a requisição para a API do Chess.com que lista os streamers
         const response = await axios.get('https://api.chess.com/pub/streamers');
-        
-        // Filtra apenas os streamers que estão ao vivo
         const liveStreamers = response.data.streamers
           .filter((streamer: any) => streamer.is_live)
           .map((streamer: any) => ({
@@ -45,32 +42,30 @@ const LiveStreamers: React.FC = () => {
     fetchLiveStreamers();
   }, []); 
 
-  if (loading) return <p className="p-4 text-gray-400">Loading streamers...</p>;
+  if (loading) return <div className="p-4 text-center text-gray-400">Loading streamers...</div>;
   
-  if (streamers.length === 0) return <p className="p-4 text-gray-400">No streamers live at the moment.</p>;
+  if (streamers.length === 0) return <div className="p-4 text-center text-gray-400">No streamers live at the moment.</div>;
 
-  const visibleStreamers = showAll ? streamers : streamers.slice(0, 9);
+  const visibleStreamers = showAll ? streamers : streamers.slice(0, 12);
 
   return (
-    <div className="mb-10">
-      {/* Cabeçalho da seção */}
-      <div className="flex items-center gap-2 mb-4">
-        <Play className="text-green-500" />
-        <h2 className="text-xl font-bold">Live Streamers</h2>
+    <div className="mb-10 px-4 sm:px-6">
+      {/* Section Header */}
+      <div className="flex items-center gap-2 mb-6">
+        <Play className="text-green-500 flex-shrink-0" />
+        <h2 className="text-xl md:text-2xl font-bold">Live Streamers</h2>
       </div>
-
-      {/* Grid responsivo para os streamers (1 coluna em mobile, 3 em desktop) */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
         {visibleStreamers.map((streamer) => (
           <a
             key={streamer.username}
-            href={streamer.twitch_url || '#'} // Fallback para '#' se não tiver URL
+            href={streamer.twitch_url || '#'}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gray-800 rounded-lg p-4 flex items-center gap-3 hover:bg-gray-750 transition-colors cursor-pointer group"
+            className="bg-gray-800 rounded-lg p-4 flex items-center gap-3 hover:bg-gray-750 transition-colors cursor-pointer border border-gray-700 hover:border-gray-600"
           >
-            {/* Container do avatar */}
-            <div className="w-12 h-12 rounded-full bg-gray-700 overflow-hidden flex-shrink-0">
+            {/* Avatar indicando que está ao vivo */}
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-700 overflow-hidden flex-shrink-0 relative">
               {streamer.avatar ? (
                 <img 
                   src={streamer.avatar} 
@@ -78,60 +73,70 @@ const LiveStreamers: React.FC = () => {
                   className="w-full h-full object-cover" 
                 />
               ) : (
-                // Fallback com ícone de usuário se não tiver avatar
                 <User size={20} className="m-auto mt-3 text-gray-400" />
               )}
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-gray-800"></span>
             </div>
 
-            {/* Informações do streamer */}
-            <div className="flex-grow">
-              {/* Nome de usuário */}
-              <h3 className="font-medium group-hover:text-blue-400 transition-colors">
-                {streamer.username}
-              </h3>
+            {/* Streamer Info */}
+            <div className="flex-grow min-w-0">
+              <div className="flex items-baseline gap-2">
+                <h3 className="font-medium group-hover:text-blue-400 transition-colors truncate">
+                  {streamer.username}
+                </h3>
+                {streamer.title && (
+                  <span className="hidden sm:inline-block text-xs bg-blue-900 text-blue-300 px-2 py-0.5 rounded-full truncate">
+                    {streamer.title}
+                  </span>
+                )}
+              </div>
               
-              {/* Status "ao vivo" e contagem de espectadores */}
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-red-500"></span>
-                <span className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
+              {/* Live status */}
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-xs md:text-sm text-gray-400 group-hover:text-gray-300 transition-colors flex items-center">
+                  <span className="h-2 w-2 rounded-full bg-red-500 mr-1"></span>
                   {streamer.viewers 
-                    ? `${streamer.viewers} viewers` 
-                    : 'Live'}
+                    ? `${streamer.viewers.toLocaleString()} viewers` 
+                    : 'Live now'}
                 </span>
               </div>
               
-              {/* Título da transmissão */}
-              <p className="text-sm text-gray-300 group-hover:text-gray-200 truncate transition-colors">
-                {streamer.title}
-              </p>
+              {/* Título */}
+              {streamer.title && (
+                <p className="sm:hidden text-xs text-gray-300 group-hover:text-gray-200 truncate mt-1">
+                  {streamer.title}
+                </p>
+              )}
             </div>
 
-            {/* Botão de ação (seta para direita) */}
-            <div className="bg-blue-600 p-2 rounded group-hover:bg-blue-700 transition-colors">
+            {/* Action Button */}
+            <div className="bg-blue-600 p-1.5 md:p-2 rounded-lg group-hover:bg-blue-700 transition-colors flex-shrink-0">
               <ArrowRight size={16} className="text-white" />
             </div>
           </a>
         ))}
       </div>
 
-      {/* Botão "Ver todos" ou "Mostrar menos" (só aparece se houver mais de 9 streamers) */}
-      {streamers.length > 9 && (
-        <button
-          onClick={() => setShowAll(!showAll)} // Alterna entre mostrar todos/alguns
-          className="mt-4 flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm"
-        >
-          {showAll ? (
-            <>
-              <ChevronUp size={16} />
-              <span>Show less</span>
-            </>
-          ) : (
-            <>
-              <ChevronDown size={16} />
-              <span>See all ({streamers.length})</span>
-            </>
-          )}
-        </button>
+      {/* View All Button */}
+      {streamers.length > 12 && (
+        <div className="mt-6 text-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="inline-flex items-center gap-1.5 text-blue-400 hover:text-blue-300 text-sm md:text-base px-4 py-2 rounded-lg bg-gray-800 hover:bg-gray-750 transition-colors"
+          >
+            {showAll ? (
+              <>
+                <ChevronUp size={18} />
+                <span>Show less</span>
+              </>
+            ) : (
+              <>
+                <ChevronDown size={18} />
+                <span>View all ({streamers.length} streamers)</span>
+              </>
+            )}
+          </button>
+        </div>
       )}
     </div>
   );

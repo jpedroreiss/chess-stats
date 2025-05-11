@@ -19,10 +19,9 @@ export default function ChessStats() {
 
       {/* Main Content */}
       <main className="flex-grow px-6 py-8">
-        {/* Hero section */}
         <div className="flex items-center justify-center gap-x-6 mb-10">
         <img 
-            src="./7433-brilliant-move-chess.webp" 
+            src="./chess-brilliant.webp" 
             alt="Chess Brilliant" 
             className="w-20 h-20 object-contain"
         />

@@ -10,80 +10,123 @@ interface RSSArticle {
 const ChessNewsRSS: React.FC = () => {
   const [articles, setArticles] = useState<RSSArticle[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Função assíncrona para buscar o feed RSS
     const fetchRSS = async () => {
       try {
+        setLoading(true);
+        setError(null);
+        
         const proxyUrl = 'https://api.allorigins.win/get?url=';
-        // URL do feed RSS do Chess.com
         const feedUrl = 'https://www.chess.com/rss/news';
         
-        
         const response = await fetch(`${proxyUrl}${encodeURIComponent(feedUrl)}`);
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch RSS feed');
+        }
+        
         const data = await response.json();
 
-       
-        const parser = new DOMParser();
-        const xml = parser.parseFromString(data.contents, 'application/xml');
-        
-        
-        const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
+        if (data.contents) {
+          const parser = new DOMParser();
+          const xml = parser.parseFromString(data.contents, 'application/xml');
+          
+          const items = Array.from(xml.querySelectorAll('item')).slice(0, 3);
 
-       
-        const parsed = items.map((item) => ({
-          title: item.querySelector('title')?.textContent || '',
-          link: item.querySelector('link')?.textContent || '',
-          pubDate: item.querySelector('pubDate')?.textContent || '',
-          description: item.querySelector('description')?.textContent || '',
-        }));
+          const parsed = items.map((item) => ({
+            title: item.querySelector('title')?.textContent || 'No title',
+            link: item.querySelector('link')?.textContent || '#',
+            pubDate: item.querySelector('pubDate')?.textContent || '',
+            description: item.querySelector('description')?.textContent || '',
+          }));
 
-        setArticles(parsed);
+          setArticles(parsed);
+        } else {
+          throw new Error('No content received');
+        }
       } catch (error) {
-        console.error('Erro ao carregar RSS:', error);
+        console.error('Error loading RSS:', error);
+        setError('Failed to load news. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    // Chama a função de busca
     fetchRSS();
-  }, []); 
+  }, []);
 
+  if (loading) {
+    return (
+      <div className="mb-10 px-4 sm:px-6">
+        <div className="flex items-center gap-2 mb-6">
+          <h2 className="text-xl md:text-2xl font-bold">♔ Last News</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-gray-800 rounded-lg p-4 h-40 animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
-  if (loading) return <p className="text-center py-8">Carregando notícias...</p>;
+  if (error || articles.length === 0) {
+    return (
+      <div className="mb-10 px-4 sm:px-6">
+        <div className="flex items-center gap-2 mb-6">
+          <h2 className="text-xl md:text-2xl font-bold">♔ Last News</h2>
+        </div>
+        <div className="text-center py-8 text-gray-400">
+          {error || 'No news available at the moment.'}
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="mb-8">
-      {/* Título da seção */}
-      <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">♔ Last News</h2>
+    <div className="mb-10 px-4 sm:px-6">
+      {/* Section Header */}
+      <div className="flex items-center gap-2 mb-6">
+        <h2 className="text-xl md:text-2xl font-bold">♔ Last News</h2>
+      </div>
 
-      {/* Grid responsivo para os artigos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {articles.map((article, index) => (
           <a
             key={index}
             href={article.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-5 transition-colors duration-200 hover:border-gray-300 dark:hover:border-gray-600"
+            className="block bg-gray-800 rounded-lg p-5 border border-gray-700 hover:border-gray-600 transition-colors hover:bg-gray-750"
           >
-            <div className="space-y-3">
-              {/* Título do artigo com limite de 2 linhas */}
-              <h3 className="font-medium text-gray-900 dark:text-white line-clamp-2 hover:text-blue-400">
+            <div className="space-y-3 h-full flex flex-col">
+              {/* Titulo */}
+              <h3 className="font-medium text-white group-hover:text-blue-400 transition-colors line-clamp-2">
                 ♟ {article.title}
               </h3>
               
-              {/* Descrição do artigo (HTML) com limite de 3 linhas */}
-              <p 
-                className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3" 
+              {/* Descrição */}
+              <div 
+                className="text-sm text-gray-400 flex-grow line-clamp-3"
                 dangerouslySetInnerHTML={{ __html: article.description }} 
               />
               
-              {/* Data de publicação formatada */}
-              <span className="text-xs text-gray-500">
-                {new Date(article.pubDate).toLocaleDateString('pt-BR')}
-              </span>
+              {/* Data de publicação */}
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-xs text-gray-500">
+                  {new Date(article.pubDate).toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric'
+                  })}
+                </span>
+                <span className="text-xs bg-blue-900 text-blue-300 px-2 py-1 rounded">
+                  Read more
+                </span>
+              </div>
             </div>
           </a>
         ))}
