@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
   return (
     <header className="px-6 py-4 bg-gray-900 border-b border-gray-800 sticky top-0 z-10">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo e Título */}
+        {/* Logo e Titulo */}
         <div className="flex items-center gap-3">
           <button
              onClick={() => window.location.reload()}
