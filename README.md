@@ -2,9 +2,7 @@
 
 **Chess Stats** é uma aplicação web desenvolvida com **React + TypeScript** que consome a API pública do [Chess.com](https://www.chess.com/) para exibir dados em tempo real do mundo do xadrez.
 
-![1](https://github.com/user-attachments/assets/b8de16df-9af0-4f54-9e90-6acbbbf2630b)
-
-![2](https://github.com/user-attachments/assets/da997c99-38cd-4327-a621-e23b2771668b)
+![565655](https://github.com/user-attachments/assets/490ec871-cd59-400e-bf68-ff1e73777486)
 
 ---
 
@@ -35,7 +33,7 @@
 
 ## 🎨 Justificativa para o uso do Tailwind CSS
 
-A escolha pelo Tailwind CSS se deu principalmente pela sua proposta de produtividade e agilidade no desenvolvimento de interfaces modernas e responsivas. Apesar de outras opções como Sass serem populares, o Tailwind oferece vantagens que se alinham bem ao contexto e aos objetivos do projeto.
+A escolha pelo Tailwind CSS se deu principalmente pela sua proposta de produtividade e agilidade no desenvolvimento de interfaces modernas e responsivas. Apesar de outras opções como Sass, o Tailwind oferece vantagens que se alinham bem ao contexto e aos objetivos do projeto.
 
 
 ## 💡 Como rodar o projeto localmente
