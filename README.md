@@ -40,7 +40,7 @@ A escolha pelo Tailwind CSS se deu principalmente pela sua proposta de produtivi
 
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/chess-stats.git
+git clone https://github.com/jpedroreiss/chess-stats.git
 
 # Acesse a pasta
 cd chess-stats
