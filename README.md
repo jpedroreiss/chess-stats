@@ -1,6 +1,9 @@
 # ♟️ Chess Stats
 
-**Chess Stats** é uma aplicação web desenvolvida com **React + TypeScript** que consome a API pública do [Chess.com](https://www.chess.com/) para exibir dados em tempo real do mundo do xadrez.
+**Chess Stats** é uma aplicação web desenvolvida com **React + TypeScript** que consome a API pública do [Chess.com](https://www.chess.com/) para exibir dados em tempo real do mundo do xadrez. 
+
+
+🔗 [https://jpedroreiss.github.io/chess-stats/](https://jpedroreiss.github.io/chess-stats/)
 
 ![565655](https://github.com/user-attachments/assets/490ec871-cd59-400e-bf68-ff1e73777486)
 
@@ -28,13 +31,7 @@
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Axios](https://axios-http.com/)
 - [Chess.com Public API](https://www.chess.com/news/view/published-data-api)
-
-
-
-## 🎨 Justificativa para o uso do Tailwind CSS
-
-A escolha pelo Tailwind CSS se deu principalmente pela sua proposta de produtividade e agilidade no desenvolvimento de interfaces modernas e responsivas. Apesar de outras opções como Sass, o Tailwind oferece vantagens que se alinham bem ao contexto e aos objetivos do projeto.
-
+  
 
 ## 💡 Como rodar o projeto localmente
 
@@ -52,10 +49,6 @@ npm install
 npm run dev
 
 ```
-
-## O projeto foi desenvolvido como parte do programa **Zetta Lab**.
-
-![zetta](https://github.com/user-attachments/assets/41535cae-a33c-4c8e-938d-bb38bd4044d6)
 
 
 
